@@ -16,6 +16,8 @@ class GameApp
           puts "\n"
         when "B"
           puts "Easy AI Mode!\n"
+          basic_ai(board)
+          puts "\n"
         when "C"
           puts "Difficult AI Mode!\n"
         when "P"
@@ -59,11 +61,59 @@ class GameApp
 
   end
 
+  def basic_ai(board)
+    place = prompt("Would you like to be first or second player?",1,2)
+
+    playernum = 0
+
+    if(place==0)
+      puts "Player is player 1. AI is player 2."
+    else
+      puts "AI is player 1. Player is player 2."
+    end
+
+    go=true
+    while(go)
+      board.print_board
+      player = playernum%2
+      if(place==0)
+        if(player==0)
+          player(board,1,"X")
+        else
+          basic_ai_move(board,"O")
+        end
+      else
+        if(player==0)
+          basic_ai_move(board,"X")
+        else
+          player(board,2,"O")
+        end
+      end
+      playernum = playernum + 1
+      go=board.check_if_won
+    end
+
+    puts "Player " +(player+1).to_s + " won!"
+
+  end
+
+  def basic_ai_move(board,value)
+    go = true
+    while(go)
+      row = 1 + rand(2)
+      col = 1 + rand(2)
+      if(!check_val(row,col))
+        go = false
+      end
+    end
+    board.insertVal(row col)
+  end
+
   def player(board, player, value)
     go = true
     while(go)
-      row = prompt("Player #{player}, what row would you like to insert your #{value} into?")
-      col = prompt("Player #{player}, what column would you like to insert your #{value} into?")
+      row = prompt("Player #{player}, what row would you like to insert your #{value} into?", 0, 3)
+      col = prompt("Player #{player}, what column would you like to insert your #{value} into?", 0, 3)
       go = board.check_val(row, col)
       if(go==true)
         puts "There is already a value entered at #{row+1},#{col+1}."
@@ -73,19 +123,19 @@ class GameApp
     board.insertVal(row,col,value)
   end
 
-  def prompt(prompt)
+  def prompt(prompt, x, y)
     unvarified = true
     while(unvarified)
       puts prompt
       var = gets().chomp()
       var = var.to_i-1
-      unvarified = check(var)
+      unvarified = check(var, x, y)
     end
     return var
   end
 
-  def check(var)
-    if(var >= 0 and var < 3)
+  def check(var, x, y)
+    if(var >= x and var < y)
       return false
     end
     puts "#{var+1} is invalid. Please insert a number 1-3."
