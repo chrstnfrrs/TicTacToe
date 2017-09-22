@@ -27,14 +27,10 @@ class Board
 
   def check_if_won
     good = false
-    good = horiz_check(good)
-    if(good == false)
-      good = vert_check(good)
+    if(vert_check(good) or horiz_check(good) or diagonal_check(good))
+      return true
     end
-    if(good == false)
-      good = diagonal_check(good)
-    end
-    return good
+    return false
   end
 
   def horiz_check(good)
