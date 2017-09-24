@@ -2,16 +2,16 @@
 class Board
 
   def initialize()
-    @gameboard = [["  ", " ", " "],["  ", " ", " "],["  ", " ", " "]]
+    @gameboard = Array.new(3, Array.new(3, " "))
   end
 
   def  print_board()
 
-    puts @gameboard[0][0] + " | " + @gameboard[0][1] + " | " + @gameboard[0][2]
-    puts "--- --- ---"
-    puts @gameboard[1][0] + " | " + @gameboard[1][1] + " | " + @gameboard[1][2]
-    puts "--- --- ---"
-    puts @gameboard[2][0] + " | " + @gameboard[2][1] + " | " + @gameboard[2][2]
+    puts @gameboard[0][0] + "  | " + @gameboard[0][1] + " | " + @gameboard[0][2]
+    puts "---+---+---"
+    puts @gameboard[1][0] + "  | " + @gameboard[1][1] + " | " + @gameboard[1][2]
+    puts "---+---+---"
+    puts @gameboard[2][0] + "  | " + @gameboard[2][1] + " | " + @gameboard[2][2]
   end
 
   def insertVal(row, col, value)
